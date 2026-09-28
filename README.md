@@ -32,6 +32,7 @@ Open <http://127.0.0.1:8000> in your browser.
 ├── index.html       # Application markup and views
 ├── styles.css       # Main visual system and responsive styles
 ├── result.css       # Grounded-answer result styles
+├── animations.css   # Motion, hover states, and reduced-motion fallback
 ├── app.js           # Navigation, role switching, and demo interactions
 ├── favicon.svg      # NexusVault favicon
 └── README.md

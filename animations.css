@@ -1,0 +1,117 @@
+/* NexusVault motion layer */
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes soft-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(118,195,160,.12); }
+  50% { box-shadow: 0 0 0 7px rgba(118,195,160,0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@keyframes spark-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-3px) rotate(8deg); }
+}
+
+.content-view.active-view {
+  animation: view-in .38s cubic-bezier(.22,.8,.26,1) both;
+}
+
+.answer-area {
+  transition: background-color .35s ease, box-shadow .35s ease;
+}
+
+.answer-area.answer-result {
+  box-shadow: inset 3px 0 0 var(--mint);
+}
+
+.answer-result .answer-header,
+.answer-result .result-copy,
+.answer-result .evidence {
+  animation: soft-rise .4s cubic-bezier(.22,.8,.26,1) both;
+}
+
+.answer-result .result-copy { animation-delay: .06s; }
+.answer-result .evidence { animation-delay: .12s; }
+
+.evidence-row {
+  transition: background-color .2s ease, padding-left .2s ease;
+}
+
+.evidence-row:hover {
+  background: rgba(255,255,255,.72);
+  padding-left: 7px;
+}
+
+.status-pip,
+.sync-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+.spark {
+  display: inline-block;
+  animation: spark-float 2.2s ease-in-out infinite;
+}
+
+.query-card:focus-within {
+  border-color: #b9c8c0;
+  box-shadow: 0 14px 34px rgba(16,27,45,.09), 0 0 0 3px rgba(118,195,160,.11);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.ask-button,
+.primary-action,
+.secondary-action,
+.role-button,
+.citation-button {
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.ask-button:hover,
+.primary-action:hover,
+.secondary-action:hover,
+.role-button:hover,
+.citation-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 15px rgba(16,27,45,.11);
+}
+
+.source-card {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.source-card:hover {
+  transform: translateY(-5px);
+  border-color: #cbd4d0;
+  box-shadow: 0 17px 34px rgba(16,27,45,.1);
+}
+
+.query-top input::placeholder {
+  background: linear-gradient(90deg, #9ca4ad 35%, #c8ced2 50%, #9ca4ad 65%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
