@@ -63,4 +63,4 @@ NexusVault uses a dark navy navigation shell, paper-white workspace surfaces, wa
 
 ## License
 
-This prototype is available for personal and educational use. Add a project-specific license before distributing it as a production system.
+This project is licensed under the [MIT License](LICENSE).
