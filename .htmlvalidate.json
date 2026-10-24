@@ -2,6 +2,8 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "doctype-style": "off",
-    "void-style": "off"
+    "void-style": "off",
+    "button-type": "off",
+    "no-raw-characters": "off"
   }
 }
