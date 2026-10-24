@@ -3,7 +3,7 @@
   "rules": {
     "doctype-style": "off",
     "void-style": "off",
-    "button-type": "off",
+    "button-type-attr": "off",
     "no-raw-characters": "off"
   }
 }
