@@ -59,7 +59,10 @@ class AuditViewerHandler(BaseHTTPRequestHandler):
                 item.get("policy_reason", ""),
             ]
             rows.append("<tr>" + "".join(f"<td>{escape(str(value))}</td>" for value in cells) + "</tr>")
-        page = PAGE.format(**{**filters, "count": len(filtered), "rows": "".join(rows)})
+        page = PAGE
+        values = {**filters, "count": str(len(filtered)), "rows": "".join(rows)}
+        for key, value in values.items():
+            page = page.replace("{" + key + "}", escape(str(value)))
         body = page.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
