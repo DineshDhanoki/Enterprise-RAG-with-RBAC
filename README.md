@@ -112,7 +112,7 @@ The roadmap turns each boundary into a small, reviewable contribution:
 
 The [reference-slice decision](docs/architecture/0001-reference-slice.md) sets the first implementation boundary: a local Python service with fake identities, deterministic documents, and a tested deny-before-retrieval rule. It does not make the public demo a secure application.
 
-The larger work remains in [authentication](issues/4), [policy](issues/5), [ingestion](issues/6), [retrieval](issues/7), [evaluation](issues/9), and [audit](issues/10). These are roadmap umbrellas to split into reviewable PRs. [Accessibility](issues/11) also needs focused tasks. A `good first issue` is a smaller task with a concrete local verification path.
+The larger work remains in [authentication](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/4), [policy](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/5), [ingestion](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/6), [retrieval](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/7), [evaluation](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/9), and [audit](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/10). These are roadmap umbrellas to split into reviewable PRs. [Accessibility](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/11) also needs focused tasks. A `good first issue` is a smaller task with a concrete local verification path.
 
 ## Choose your doorway
 
@@ -122,9 +122,13 @@ You do not need to be an expert in every part of RAG to help.
 
 Start with accessibility, responsive behavior, copy, information architecture, or the live demo.
 
+Current small tasks: [README screenshot and browser note](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/3), [keyboard persona menu](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/17), [accessible settings toggles](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/18), and [truthful reasoning-trail action](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/19).
+
 ### “I care about security.”
 
 Start with policy decisions, session boundaries, redaction, auditability, and threat-model documentation.
+
+The first backend sequence is the [local service and fake fixtures](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/20), followed by a [tested deny-before-retrieval slice](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/21).
 
 ### “I build data systems.”
 

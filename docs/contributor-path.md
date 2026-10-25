@@ -13,6 +13,10 @@ The live site is a design demo. You can improve it with HTML, CSS, JavaScript, d
 
 Use the [good first issue list](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). A starter issue should name the files, expected behavior, and how to verify it. Comment with a brief approach before beginning; a maintainer can help clarify scope.
 
+Start with [a README screenshot](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/3), the [keyboard persona menu](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/17), [settings toggle state](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/18), or the [reasoning-trail action](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/19). Each has a narrow scope and a local check.
+
+If you prefer backend work, begin with the [local service skeleton](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/20). The [deny-before-retrieval test](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/21) follows it. These are not first-issue tasks because they define a security boundary.
+
 The [architecture decision](architecture/0001-reference-slice.md) explains how the static demo relates to the future Python reference service. Ask on an issue before changing the trust boundary or adding dependencies.
 
 ## Open a PR
