@@ -185,11 +185,7 @@ The project is early. That is not a weakness to hide; it is the opportunity. You
 
 ## Local audit trail
 
-The Issue #10 audit slice is built on the local Python reference-service branch. It provides a metadata-only JSONL event writer and local read-only viewer. The first request events can be correlated using the optional `X-Request-ID` header; policy decisions and citation events can use the same event contract as those flows are added.
-
-
-
-The local Python reference includes a metadata-only JSONL audit event writer and a read-only viewer. Events can be correlated by request ID and include actor/action/outcome, opaque source IDs, collection, and policy reason without storing prompts, answers, or snippets. Common sensitive patterns are redacted, but this is not a production or tamper-proof logging system.
+The local Python reference includes a metadata-only JSONL audit event writer and a read-only viewer. Query requests can emit a search event when an `X-Request-ID` UUID header is supplied. The same ID can correlate later policy-decision and citation events without storing prompts, answers, or snippets.
 
 Run the audit tests and viewer (Python 3.12):
 
@@ -198,7 +194,7 @@ python3.12 -m unittest discover -s tests -v
 python3.12 -m reference_service.audit_viewer --file .local/audit.jsonl
 ```
 
-The viewer binds to `127.0.0.1:8010`. See [the audit trail guide](docs/audit-trail.md) for the schema, threat model, retention, export, and deletion considerations. Do not commit local audit logs.
+The viewer binds to `127.0.0.1:8010` and filters by actor, outcome, collection, and request ID. See [the audit trail guide](docs/audit-trail.md) for the event contract, redaction limits, threat model, retention, export, and deletion considerations. Do not commit local audit logs. This local reference is not a tamper-proof or production audit system.
 
 ## Changelog and status
 
