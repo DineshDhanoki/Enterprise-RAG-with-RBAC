@@ -98,15 +98,14 @@ class AuditEventTests(unittest.TestCase):
             previous_log = RequestHandler.audit_log
             RequestHandler.audit_log = JsonlAuditLog(audit_path)
             server = ThreadingHTTPServer(("127.0.0.1", 0), RequestHandler)
-            thread = Thread(target=server.serve_forever, daemon=True)
+            thread = Thread(server.serve_forever, daemon=True)
             thread.start()
             request_id = str(uuid4())
             try:
+                payload = json.dumps({"persona_id": "engineering", "question": "private question"}).encode()
                 request = Request(
                     f"http://127.0.0.1:{server.server_port}/v1/query",
-                    data=json.dumps(
-                        {"persona_id": "engineering", "question": "confidential prompt"}
-                    ).encode(),
+                    data=payload,
                     headers={"Content-Type": "application/json", "X-Request-ID": request_id},
                     method="POST",
                 )
@@ -116,7 +115,7 @@ class AuditEventTests(unittest.TestCase):
                 self.assertEqual(1, len(rows))
                 self.assertEqual(request_id, rows[0]["request_id"])
                 self.assertEqual("search", rows[0]["action"])
-                self.assertNotIn("confidential prompt", audit_path.read_text())
+                self.assertNotIn("private question", audit_path.read_text())
             finally:
                 server.shutdown()
                 server.server_close()
