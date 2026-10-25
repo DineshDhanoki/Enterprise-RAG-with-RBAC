@@ -89,5 +89,40 @@ class AuditEventTests(unittest.TestCase):
                         action="search", outcome="success", source_ids=["../secret"])
 
 
+    def test_query_server_records_search_event_when_request_id_is_supplied(self):
+        from http.server import ThreadingHTTPServer
+        from threading import Thread
+        from urllib.request import Request, urlopen
+        from reference_service.server import RequestHandler
+
+        with tempfile.TemporaryDirectory() as directory:
+            audit_path = Path(directory) / "events.jsonl"
+            previous_path = RequestHandler.audit_log.path
+            RequestHandler.audit_log = JsonlAuditLog(audit_path)
+            server = ThreadingHTTPServer(("127.0.0.1", 0), RequestHandler)
+            thread = Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            request_id = str(uuid4())
+            try:
+                request = Request(
+                    f"http://127.0.0.1:{server.server_port}/v1/query",
+                    data=json.dumps({"persona_id": "engineering", "question": "confidential prompt"}).encode(),
+                    headers={"Content-Type": "application/json", "X-Request-ID": request_id},
+                    method="POST",
+                )
+                with urlopen(request) as response:
+                    self.assertEqual(200, response.status)
+                rows = RequestHandler.audit_log.read()
+                self.assertEqual(1, len(rows))
+                self.assertEqual(request_id, rows[0]["request_id"])
+                self.assertEqual("search", rows[0]["action"])
+                self.assertNotIn("confidential prompt", audit_path.read_text())
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
+                RequestHandler.audit_log = JsonlAuditLog(previous_path)
+
+
 if __name__ == "__main__":
     unittest.main()
