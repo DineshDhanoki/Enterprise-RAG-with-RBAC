@@ -9,7 +9,7 @@
 
 > NexusVault is an evidence-first workspace for enterprise knowledge operations—designed around a simple promise: an answer should show **what it knows, why you were allowed to know it, and which sources support it**.
 
-**[Enter the live prototype →](https://dineshdhanoki.github.io/Enterprise-RAG-with-RBAC/)** · **[Explore the roadmap →](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues)** · **[Find a first contribution →](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)**
+**[Enter the live prototype →](https://dineshdhanoki.github.io/Enterprise-RAG-with-RBAC/)** · **[Choose a small first task →](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[See the architecture decision →](docs/architecture/0001-reference-slice.md)**
 
 ---
 
@@ -110,16 +110,9 @@ The central design decision is simple and non-negotiable: a retrieval provider m
 
 The roadmap turns each boundary into a small, reviewable contribution:
 
-1. [Live demo and contributor quickstart](issues/3)
-2. [Authentication and signed sessions](issues/4)
-3. [Deny-by-default RBAC policy engine](issues/5)
-4. [Document ingestion with provenance](issues/6)
-5. [Permission-aware retrieval adapter](issues/7)
-6. [Reproducible evaluation harness](issues/9)
-7. [Privacy-safe audit trail](issues/10)
-8. [Keyboard and screen-reader accessibility](issues/11)
+The [reference-slice decision](docs/architecture/0001-reference-slice.md) sets the first implementation boundary: a local Python service with fake identities, deterministic documents, and a tested deny-before-retrieval rule. It does not make the public demo a secure application.
 
-Every open roadmap issue has `good first issue` and `help wanted` labels so a new contributor can see where to begin.
+The larger work remains in [authentication](issues/4), [policy](issues/5), [ingestion](issues/6), [retrieval](issues/7), [evaluation](issues/9), and [audit](issues/10). These are roadmap umbrellas to split into reviewable PRs. [Accessibility](issues/11) also needs focused tasks. A `good first issue` is a smaller task with a concrete local verification path.
 
 ## Choose your doorway
 
@@ -143,7 +136,7 @@ Start with retrieval interfaces, deterministic providers, citation contracts, an
 
 ### “I am new to open source.”
 
-Start with a [`good first issue`](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22), read [CONTRIBUTING.md](CONTRIBUTING.md), and ask a question in the issue before you code.
+Start with the [five-minute contributor path](docs/contributor-path.md), choose a [`good first issue`](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22), and ask a question in the issue before you code.
 
 ## Run it locally
 
@@ -163,6 +156,8 @@ node --check app.js
 ```
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for the review contract, [SECURITY.md](SECURITY.md) for vulnerability reporting, and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations.
+
+The static demo is the right place for UI and documentation contributions. Backend work begins with the [local reference slice](docs/architecture/0001-reference-slice.md), with no hosted services required.
 
 ## Project signals
 

@@ -1,0 +1,33 @@
+.repo-link {
+  display: block;
+  margin: 0 10px 14px;
+  color: #d8e8dd;
+  font-size: 11px;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.top-repo-link {
+  color: #526c5c;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.repo-link:focus-visible,
+.top-repo-link:focus-visible {
+  outline: 3px solid #e0ae40;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (max-width: 850px) {
+  .repo-link { font-size: 0; }
+  .repo-link::after { content: '↗'; font-size: 18px; }
+}
+
+@media (max-width: 600px) {
+  .top-repo-link { font-size: 11px; }
+}

@@ -6,6 +6,10 @@
 
 <!-- Use `Closes #123` when this PR fully resolves an issue. -->
 
+## Scope
+
+<!-- Is this a static demo change or a reference-service change? If access behavior changes, explain the denied case. -->
+
 ## Verification
 
 - [ ] `python3 tests/smoke_test.py`

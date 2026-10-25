@@ -1,11 +1,12 @@
 # Contributing to NexusVault
 
-Thanks for helping build a safer, more explainable enterprise RAG foundation.
+Thanks for helping build a safer, more explainable enterprise RAG foundation. Start with the [five-minute contributor path](docs/contributor-path.md) if this is your first visit.
 
 ## Before you start
 
 - Search existing issues first.
 - For a substantial change, open or comment on an issue before implementing it.
+- Check whether a roadmap issue has a smaller linked task. The broad authentication, policy, ingestion, and retrieval issues are not beginner tasks.
 - Never include credentials, private documents, customer data, or real access tokens in issues or pull requests.
 
 ## Local setup
@@ -43,3 +44,5 @@ Maintainers may request documentation or tests before merging. A green check is 
 ## Good first contributions
 
 Look for issues labelled `good first issue` and `help wanted`. Documentation, accessibility, test coverage, and deterministic adapters are especially valuable ways to learn the project.
+
+The public Pages app is a static demo. It does not enforce RBAC or retrieve real documents. Read the [reference-slice decision](docs/architecture/0001-reference-slice.md) before proposing backend work.

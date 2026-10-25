@@ -10,6 +10,7 @@ required = [
     "styles.css",
     "result.css",
     "animations.css",
+    "contributor.css",
     "app.js",
     "favicon.svg",
     "README.md",
@@ -30,6 +31,7 @@ assert '<meta name="viewport"' in html
 assert 'id="query-input"' in html
 assert 'id="ask-button"' in html
 assert 'aria-label="Primary navigation"' in html
+assert 'href="https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues"' in html
 assert re.search(r"<title>[^<]+</title>", html)
 assert "function escapeHtml" in app
 assert "escapeHtml(match.copy)" in app
