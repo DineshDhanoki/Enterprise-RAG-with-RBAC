@@ -5,10 +5,12 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from .contracts import RequestValidationError
 from .service import ReferenceService
+from .audit import JsonlAuditLog, build_event
 
 
 class RequestHandler(BaseHTTPRequestHandler):
     service = ReferenceService()
+    audit_log = JsonlAuditLog('.local/audit.jsonl')
 
     def _send_json(self, status, payload):
         body = json.dumps(payload).encode("utf-8")
@@ -41,6 +43,19 @@ class RequestHandler(BaseHTTPRequestHandler):
             self._send_json(400, {"error": str(error)})
         else:
             self._send_json(200, result)
+            request_id = self.headers.get('X-Request-ID')
+            if request_id:
+                try:
+                    event = build_event(
+                        request_id=request_id,
+                        actor_id=result['persona_id'],
+                        action='search',
+                        outcome='success',
+                    )
+                    self.audit_log.append(event)
+                except ValueError:
+                    # Invalid correlation metadata must not affect query response.
+                    pass
 
     def log_message(self, format_string, *args):
         # Keep local demo logs free of request bodies and query contents.
