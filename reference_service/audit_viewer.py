@@ -7,7 +7,8 @@ from urllib.parse import parse_qs, urlparse
 
 from .audit import JsonlAuditLog
 
-PAGE = """<!doctype html><n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+PAGE = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NexusVault local audit viewer</title>
 <style>
 body{font:15px system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#172033;background:#f7f8fa}
