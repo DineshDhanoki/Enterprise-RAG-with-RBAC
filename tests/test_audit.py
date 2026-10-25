@@ -4,9 +4,12 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from threading import Thread
+from urllib.request import Request, urlopen
 from uuid import uuid4
 
 from reference_service.audit import JsonlAuditLog, build_event
+from reference_service.server import RequestHandler
 
 
 class AuditEventTests(unittest.TestCase):
@@ -90,14 +93,9 @@ class AuditEventTests(unittest.TestCase):
 
 
     def test_query_server_records_search_event_when_request_id_is_supplied(self):
-        from http.server import ThreadingHTTPServer
-        from threading import Thread
-        from urllib.request import Request, urlopen
-        from reference_service.server import RequestHandler
-
         with tempfile.TemporaryDirectory() as directory:
             audit_path = Path(directory) / "events.jsonl"
-            previous_path = RequestHandler.audit_log.path
+            previous_log = RequestHandler.audit_log
             RequestHandler.audit_log = JsonlAuditLog(audit_path)
             server = ThreadingHTTPServer(("127.0.0.1", 0), RequestHandler)
             thread = Thread(target=server.serve_forever, daemon=True)
@@ -106,7 +104,9 @@ class AuditEventTests(unittest.TestCase):
             try:
                 request = Request(
                     f"http://127.0.0.1:{server.server_port}/v1/query",
-                    data=json.dumps({"persona_id": "engineering", "question": "confidential prompt"}).encode(),
+                    data=json.dumps(
+                        {"persona_id": "engineering", "question": "confidential prompt"}
+                    ).encode(),
                     headers={"Content-Type": "application/json", "X-Request-ID": request_id},
                     method="POST",
                 )
@@ -121,7 +121,7 @@ class AuditEventTests(unittest.TestCase):
                 server.shutdown()
                 server.server_close()
                 thread.join(timeout=2)
-                RequestHandler.audit_log = JsonlAuditLog(previous_path)
+                RequestHandler.audit_log = previous_log
 
 
 if __name__ == "__main__":
