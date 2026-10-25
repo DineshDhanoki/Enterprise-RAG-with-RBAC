@@ -185,6 +185,10 @@ The project is early. That is not a weakness to hide; it is the opportunity. You
 
 ## Local audit trail
 
+The Issue #10 audit slice is built on the local Python reference-service branch. It provides a metadata-only JSONL event writer and local read-only viewer. The first request events can be correlated using the optional `X-Request-ID` header; policy decisions and citation events can use the same event contract as those flows are added.
+
+
+
 The local Python reference includes a metadata-only JSONL audit event writer and a read-only viewer. Events can be correlated by request ID and include actor/action/outcome, opaque source IDs, collection, and policy reason without storing prompts, answers, or snippets. Common sensitive patterns are redacted, but this is not a production or tamper-proof logging system.
 
 Run the audit tests and viewer (Python 3.12):
