@@ -3,9 +3,9 @@
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
+from .audit import JsonlAuditLog, build_event
 from .contracts import RequestValidationError
 from .service import ReferenceService
-from .audit import JsonlAuditLog, build_event
 
 
 class RequestHandler(BaseHTTPRequestHandler):
