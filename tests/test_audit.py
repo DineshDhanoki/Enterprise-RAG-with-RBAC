@@ -10,6 +10,7 @@ from uuid import uuid4
 
 from reference_service.audit import JsonlAuditLog, build_event
 from reference_service.server import RequestHandler
+from reference_service.audit_viewer import AuditViewerHandler
 
 
 class AuditEventTests(unittest.TestCase):
@@ -121,6 +122,41 @@ class AuditEventTests(unittest.TestCase):
                 server.server_close()
                 thread.join(timeout=2)
                 RequestHandler.audit_log = previous_log
+
+
+    def test_local_viewer_renders_and_filters_events(self):
+        from urllib.request import urlopen
+
+        with tempfile.TemporaryDirectory() as directory:
+            audit_path = Path(directory) / "events.jsonl"
+            log = JsonlAuditLog(audit_path)
+            log.append(build_event(
+                request_id=str(uuid4()), actor_id="persona:finance",
+                action="policy_decision", outcome="denied",
+                source_ids=["doc-finance-forecast"], policy_reason="audience_mismatch",
+                collection_id="finance",
+            ))
+            previous_path = AuditViewerHandler.audit_path
+            AuditViewerHandler.audit_path = audit_path
+            server = ThreadingHTTPServer(("127.0.0.1", 0), AuditViewerHandler)
+            thread = Thread(server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                with urlopen(f"http://127.0.0.1:{server.server_port}/?outcome=denied") as response:
+                    body = response.read().decode("utf-8")
+                    self.assertEqual(200, response.status)
+                self.assertIn("doc-finance-forecast", body)
+                self.assertIn("audience_mismatch", body)
+                self.assertIn("1 event(s)", body)
+                with urlopen(f"http://127.0.0.1:{server.server_port}/?outcome=allowed") as response:
+                    filtered_body = response.read().decode("utf-8")
+                self.assertIn("0 event(s)", filtered_body)
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
+                AuditViewerHandler.audit_path = previous_path
+
 
 
 if __name__ == "__main__":
