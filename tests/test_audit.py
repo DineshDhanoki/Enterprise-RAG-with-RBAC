@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from http.server import ThreadingHTTPServer
 from threading import Thread
 from urllib.request import Request, urlopen
 from uuid import uuid4
@@ -37,19 +38,13 @@ class AuditEventTests(unittest.TestCase):
                              source_ids=["doc-finance-forecast"], policy_reason="audience_mismatch")
         self.assertEqual(first["request_id"], second["request_id"])
 
-    def test_sensitive_values_are_redacted_and_control_chars_removed(self):
-        event = build_event(
-            request_id=str(uuid4()), actor_id="persona:engineering",
-            action="failure", outcome="failure",
-            policy_reason="contact user@example.com\nBearer abc.def.ghi password=hunter2",
-        )
-        serialized = json.dumps(event)
-        self.assertNotIn("user@example.com", serialized)
-        self.assertNotIn("abc.def.ghi", serialized)
-        self.assertNotIn("hunter2", serialized)
-        self.assertNotIn("\n", event["policy_reason"])
-        self.assertIn("[REDACTED_EMAIL]", event["policy_reason"])
-        self.assertIn("[REDACTED_TOKEN]", event["policy_reason"])
+    def test_policy_reason_must_be_an_opaque_code(self):
+        with self.assertRaises(ValueError):
+            build_event(
+                request_id=str(uuid4()), actor_id="persona:engineering",
+                action="failure", outcome="failure",
+                policy_reason="Patient Alice Smith was denied",
+            )
 
     def test_unknown_fields_are_not_persisted(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -76,6 +71,16 @@ class AuditEventTests(unittest.TestCase):
             self.assertEqual(first["request_id"], rows[1]["request_id"])
             self.assertEqual(2, len(log.path.read_text(encoding="utf-8").splitlines()))
 
+    def test_writer_assigns_timestamp_and_drops_untrusted_timestamp(self):
+        with tempfile.TemporaryDirectory() as directory:
+            log = JsonlAuditLog(Path(directory) / "events.jsonl")
+            event = build_event(request_id=str(uuid4()), actor_id="actor-1",
+                                action="search", outcome="success")
+            event["timestamp"] = "2026-01-01Tpassword=hunter2Z"
+            saved = log.append(event)
+            self.assertNotEqual(event["timestamp"], saved["timestamp"])
+            self.assertNotIn("hunter2", log.path.read_text(encoding="utf-8"))
+
     def test_rejects_non_uuid_request_id_and_unsupported_action(self):
         with self.assertRaises(ValueError):
             build_event(request_id="not-a-uuid", actor_id="actor-1",
@@ -99,7 +104,7 @@ class AuditEventTests(unittest.TestCase):
             previous_log = RequestHandler.audit_log
             RequestHandler.audit_log = JsonlAuditLog(audit_path)
             server = ThreadingHTTPServer(("127.0.0.1", 0), RequestHandler)
-            thread = Thread(server.serve_forever, daemon=True)
+            thread = Thread(target=server.serve_forever, daemon=True)
             thread.start()
             request_id = str(uuid4())
             try:
@@ -139,7 +144,7 @@ class AuditEventTests(unittest.TestCase):
             previous_path = AuditViewerHandler.audit_path
             AuditViewerHandler.audit_path = audit_path
             server = ThreadingHTTPServer(("127.0.0.1", 0), AuditViewerHandler)
-            thread = Thread(server.serve_forever, daemon=True)
+            thread = Thread(target=server.serve_forever, daemon=True)
             thread.start()
             try:
                 with urlopen(f"http://127.0.0.1:{server.server_port}/?outcome=denied") as response:
