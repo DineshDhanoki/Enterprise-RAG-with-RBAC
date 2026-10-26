@@ -20,6 +20,15 @@ REDACTIONS = (
 )
 ALLOWED_ACTIONS = {"search", "policy_decision", "citation", "sync", "failure", "answer"}
 ALLOWED_OUTCOMES = {"allowed", "denied", "success", "failure", "filtered", "partial"}
+ALLOWED_POLICY_REASONS = {
+    "audience_mismatch",
+    "not_authorized",
+    "no_matching_policy",
+    "source_filtered",
+    "upstream_error",
+    "validation_error",
+    "internal_error",
+}
 _CONTROL_CHARS = re.compile(r"[\x00-\x1f\x7f]")
 
 
@@ -37,6 +46,14 @@ def _opaque_id(value: object, field: str) -> str:
     if not result or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}", result):
         raise ValueError(f"{field} must be a non-empty opaque identifier")
     return result
+
+
+def _policy_reason(value: object) -> str:
+    if value == "":
+        return ""
+    if not isinstance(value, str) or value not in ALLOWED_POLICY_REASONS:
+        raise ValueError("policy_reason must be a known opaque code")
+    return value
 
 
 def build_event(*, request_id: str, actor_id: str, action: str, outcome: str,
@@ -63,7 +80,7 @@ def build_event(*, request_id: str, actor_id: str, action: str, outcome: str,
         "action": action,
         "outcome": outcome,
         "source_ids": ids,
-        "policy_reason": _safe_text(policy_reason, "policy_reason") if policy_reason else "",
+        "policy_reason": _policy_reason(policy_reason),
         "collection_id": _opaque_id(collection_id, "collection_id") if collection_id else "",
     }
 
@@ -85,9 +102,6 @@ class JsonlAuditLog:
             policy_reason=event.get("policy_reason", ""),
             collection_id=event.get("collection_id", ""),
         )
-        timestamp = event.get("timestamp")
-        if isinstance(timestamp, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}T[^\n]{1,32}Z", timestamp):
-            clean["timestamp"] = timestamp
         line = json.dumps(clean, ensure_ascii=True, separators=(",", ":")) + "\n"
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self._lock:
