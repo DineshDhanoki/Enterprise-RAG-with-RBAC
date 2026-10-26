@@ -4,9 +4,9 @@ This module records metadata about local reference-slice activity. It is not a t
 
 ## Event contract
 
-Each JSONL event has a schema version, UTC timestamp, request ID, actor, action, outcome, source IDs, policy reason, and optional collection. The event payload intentionally has no prompt, answer, snippet, token, password, or raw personal-data field. Unknown input fields are discarded. Free-text metadata is redacted for common email, phone, bearer-token, and secret-like patterns; control characters are normalized to prevent log-line injection.
+Each JSONL event has a schema version, a writer-generated UTC timestamp, request ID, actor, action, outcome, source IDs, an opaque policy-reason code, and optional collection. The event payload intentionally has no prompt, answer, snippet, token, password, or raw personal-data field. Unknown input fields are discarded. Policy reasons use a bounded code list rather than free text; other metadata is redacted for common email, phone, bearer-token, and secret-like patterns, and control characters are normalized to prevent log-line injection.
 
-Use stable fake actor IDs and opaque source IDs. Do not place document titles, contents, user-entered text, credentials, or real personal identifiers in actor IDs, source IDs, collection names, or policy reasons. Redaction is a defense-in-depth filter, not a guarantee that arbitrary personal data can be detected.
+Use stable fake actor IDs and opaque source IDs. Do not place document titles, contents, user-entered text, credentials, or real personal identifiers in actor IDs, source IDs, collection names, or policy reasons. Policy reasons must be one of the documented opaque codes: `audience_mismatch`, `not_authorized`, `no_matching_policy`, `source_filtered`, `upstream_error`, `validation_error`, or `internal_error`. Redaction is a defense-in-depth filter, not a guarantee that arbitrary personal data can be detected.
 
 ## Run and inspect
 
