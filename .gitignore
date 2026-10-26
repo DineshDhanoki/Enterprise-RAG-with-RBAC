@@ -1,0 +1,3 @@
+# Local audit data may contain operational metadata; never commit it.
+.local/
+*.audit.jsonl

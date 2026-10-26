@@ -183,6 +183,19 @@ The static demo is the right place for UI and documentation contributions. Backe
 
 The project is early. That is not a weakness to hide; it is the opportunity. You can help decide what the first trustworthy, permission-aware RAG reference implementation should become.
 
+## Local audit trail
+
+The local Python reference includes a metadata-only JSONL audit event writer and a read-only viewer. Query requests can emit a search event when an `X-Request-ID` UUID header is supplied. The same ID can correlate later policy-decision and citation events without storing prompts, answers, or snippets.
+
+Run the audit tests and viewer (Python 3.12):
+
+```bash
+python3.12 -m unittest discover -s tests -v
+python3.12 -m reference_service.audit_viewer --file .local/audit.jsonl
+```
+
+The viewer binds to `127.0.0.1:8010` and filters by actor, outcome, collection, and request ID. See [the audit trail guide](docs/audit-trail.md) for the event contract, redaction limits, threat model, retention, export, and deletion considerations. Do not commit local audit logs. This local reference is not a tamper-proof or production audit system.
+
 ## Changelog and status
 
 See [CHANGELOG.md](CHANGELOG.md) for releases and [GitHub Actions](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/actions) for deployment and quality checks.

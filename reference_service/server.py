@@ -3,12 +3,14 @@
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
+from .audit import JsonlAuditLog, build_event
 from .contracts import RequestValidationError
 from .service import ReferenceService
 
 
 class RequestHandler(BaseHTTPRequestHandler):
     service = ReferenceService()
+    audit_log = JsonlAuditLog('.local/audit.jsonl')
 
     def _send_json(self, status, payload):
         body = json.dumps(payload).encode("utf-8")
@@ -18,6 +20,23 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(body)
+
+
+    def _record_query_event(self, result):
+        request_id = self.headers.get("X-Request-ID")
+        if not request_id:
+            return
+        try:
+            event = build_event(
+                request_id=request_id,
+                actor_id=result["persona_id"],
+                action="search",
+                outcome="success",
+            )
+            self.audit_log.append(event)
+        except ValueError:
+            # Invalid correlation metadata must not affect the query response.
+            return
 
     def do_GET(self):
         if self.path == "/healthz":
@@ -45,6 +64,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         except RequestValidationError as error:
             self._send_json(400, {"error": str(error)})
         else:
+            self._record_query_event(result)
             self._send_json(200, result)
 
     def log_message(self, format_string, *args):
