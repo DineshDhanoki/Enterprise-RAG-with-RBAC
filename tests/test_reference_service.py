@@ -4,6 +4,7 @@ import unittest
 
 from reference_service.contracts import RequestValidationError, parse_query_request
 from reference_service.fixtures import load_fixtures
+from reference_service.server import RequestHandler
 from reference_service.service import ReferenceService
 
 
@@ -69,6 +70,21 @@ class RequestContractTests(unittest.TestCase):
         self.assertEqual("accepted", result["status"])
         self.assertIsNone(result["answer"])
         self.assertEqual([], result["sources"])
+
+
+class HttpAdapterTests(unittest.TestCase):
+    def test_malformed_content_length_returns_json_error(self):
+        handler = RequestHandler.__new__(RequestHandler)
+        handler.path = "/v1/query"
+        handler.headers = {"Content-Length": "abc"}
+        responses = []
+        handler._send_json = lambda status, body: responses.append((status, body))
+
+        handler.do_POST()
+
+        self.assertEqual(
+            [(400, {"error": "Content-Length must be an integer."})], responses
+        )
 
 
 if __name__ == "__main__":

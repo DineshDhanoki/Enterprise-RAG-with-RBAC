@@ -30,7 +30,12 @@ class RequestHandler(BaseHTTPRequestHandler):
             self._send_json(404, {"error": "Not found."})
             return
         try:
-            length = int(self.headers.get("Content-Length", "0"))
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+            except ValueError as error:
+                raise RequestValidationError(
+                    "Content-Length must be an integer."
+                ) from error
             if length <= 0 or length > 16384:
                 raise RequestValidationError("Body must be between 1 and 16384 bytes.")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
