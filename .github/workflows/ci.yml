@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
@@ -22,6 +26,8 @@ jobs:
         run: node --check app.js
       - name: Run dependency-free smoke tests
         run: python3 tests/smoke_test.py
+      - name: Run local reference service unit tests
+        run: python -m unittest discover -s tests -v
       - name: Validate HTML
         run: npx --yes html-validate@9 index.html
       - name: Check repository governance files
