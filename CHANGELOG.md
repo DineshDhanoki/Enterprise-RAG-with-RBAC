@@ -13,5 +13,5 @@ All notable changes to NexusVault are documented here.
 - Added GitHub Pages deployment and repository quality checks.
 - Added a public roadmap with contributor-ready issues.
 
-[Unreleased]: https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/releases/tag/v0.1.0
+[Unreleased]: https://github.com/DineshDhanoki/nexusvault-rag/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/DineshDhanoki/nexusvault-rag/releases/tag/v0.1.0

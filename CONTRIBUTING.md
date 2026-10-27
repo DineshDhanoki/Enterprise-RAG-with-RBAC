@@ -14,8 +14,8 @@ Thanks for helping build a safer, more explainable enterprise RAG foundation. St
 This prototype has no package manager or build step:
 
 ```bash
-git clone https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC.git
-cd Enterprise-RAG-with-RBAC
+git clone https://github.com/DineshDhanoki/nexusvault-rag.git
+cd nexusvault-rag
 python3 -m http.server 8000
 ```
 
