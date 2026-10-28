@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Security vulnerability
-    url: https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/blob/main/SECURITY.md
+    url: https://github.com/DineshDhanoki/nexusvault-rag/blob/main/SECURITY.md
     about: Please report security issues privately as described in the security policy.

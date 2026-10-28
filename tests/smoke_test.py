@@ -31,13 +31,13 @@ assert '<meta name="viewport"' in html
 assert 'id="query-input"' in html
 assert 'id="ask-button"' in html
 assert 'aria-label="Primary navigation"' in html
-assert 'href="https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues"' in html
+assert 'href="https://github.com/DineshDhanoki/nexusvault-rag/issues"' in html
 assert re.search(r"<title>[^<]+</title>", html)
 assert "function escapeHtml" in app
 assert "escapeHtml(match.copy)" in app
 assert "CONTRIBUTING.md" in readme
 assert "SECURITY.md" in readme
 assert "good first issue" in readme
-assert "github.io/Enterprise-RAG-with-RBAC" in readme
+assert "github.io/nexusvault-rag" in readme
 
 print(f"smoke checks passed ({len(required)} required files, {len(html)} HTML characters)")

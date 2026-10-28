@@ -2,14 +2,14 @@
 
 ### What if every answer had a passport?
 
-[![CI](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/actions/workflows/ci.yml/badge.svg)](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/actions/workflows/ci.yml)
-[![Live demo](https://img.shields.io/badge/demo-live-2ea44f)](https://dineshdhanoki.github.io/Enterprise-RAG-with-RBAC/)
+[![CI](https://github.com/DineshDhanoki/nexusvault-rag/actions/workflows/ci.yml/badge.svg)](https://github.com/DineshDhanoki/nexusvault-rag/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/demo-live-2ea44f)](https://dineshdhanoki.github.io/nexusvault-rag/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
-[![Open issues](https://img.shields.io/github/issues/DineshDhanoki/Enterprise-RAG-with-RBAC)](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues)
+[![Open issues](https://img.shields.io/github/issues/DineshDhanoki/nexusvault-rag)](https://github.com/DineshDhanoki/nexusvault-rag/issues)
 
 > NexusVault is an evidence-first workspace for enterprise knowledge operations—designed around a simple promise: an answer should show **what it knows, why you were allowed to know it, and which sources support it**.
 
-**[Enter the live prototype →](https://dineshdhanoki.github.io/Enterprise-RAG-with-RBAC/)** · **[Choose a small first task →](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[See the architecture decision →](docs/architecture/0001-reference-slice.md)**
+**[Enter the live prototype →](https://dineshdhanoki.github.io/nexusvault-rag/)** · **[Choose a small first task →](https://github.com/DineshDhanoki/nexusvault-rag/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** · **[See the architecture decision →](docs/architecture/0001-reference-slice.md)**
 
 ---
 
@@ -41,7 +41,7 @@ That is the system we are building in public.
 
 NexusVault is imagined as the calm control room behind an organization’s collective memory. A place where knowledge is useful without becoming invisible, and where governance is part of the experience rather than a warning at the bottom of a page.
 
-Open the [live prototype](https://dineshdhanoki.github.io/Enterprise-RAG-with-RBAC/) and take the tour:
+Open the [live prototype](https://dineshdhanoki.github.io/nexusvault-rag/) and take the tour:
 
 - **Ask Nexus** — ask a question and follow the evidence trail behind the response.
 - **Change the lens** — preview the workspace as Admin, Engineering, Finance, or People Ops.
@@ -112,7 +112,7 @@ The roadmap turns each boundary into a small, reviewable contribution:
 
 The [reference-slice decision](docs/architecture/0001-reference-slice.md) sets the first implementation boundary. The local Python reference service now provides fake identities, deterministic fixtures, and a validated request/response seam. Deny-before-retrieval is a separate follow-up slice; the service skeleton does not make the public demo or backend a secure application.
 
-The larger work remains in [authentication](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/4), [policy](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/5), [ingestion](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/6), [retrieval](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/7), [evaluation](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/9), and [audit](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/10). These are roadmap umbrellas to split into reviewable PRs. [Accessibility](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/11) also needs focused tasks. A `good first issue` is a smaller task with a concrete local verification path.
+The larger work remains in [authentication](https://github.com/DineshDhanoki/nexusvault-rag/issues/4), [policy](https://github.com/DineshDhanoki/nexusvault-rag/issues/5), [ingestion](https://github.com/DineshDhanoki/nexusvault-rag/issues/6), [retrieval](https://github.com/DineshDhanoki/nexusvault-rag/issues/7), [evaluation](https://github.com/DineshDhanoki/nexusvault-rag/issues/9), and [audit](https://github.com/DineshDhanoki/nexusvault-rag/issues/10). These are roadmap umbrellas to split into reviewable PRs. [Accessibility](https://github.com/DineshDhanoki/nexusvault-rag/issues/11) also needs focused tasks. A `good first issue` is a smaller task with a concrete local verification path.
 
 ## Choose your doorway
 
@@ -122,13 +122,13 @@ You do not need to be an expert in every part of RAG to help.
 
 Start with accessibility, responsive behavior, copy, information architecture, or the live demo.
 
-Current small tasks: [README screenshot and browser note](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/3), [keyboard persona menu](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/17), [accessible settings toggles](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/18), and [truthful reasoning-trail action](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/19).
+Current small tasks: [README screenshot and browser note](https://github.com/DineshDhanoki/nexusvault-rag/issues/3), [keyboard persona menu](https://github.com/DineshDhanoki/nexusvault-rag/issues/17), [accessible settings toggles](https://github.com/DineshDhanoki/nexusvault-rag/issues/18), and [truthful reasoning-trail action](https://github.com/DineshDhanoki/nexusvault-rag/issues/19).
 
 ### “I care about security.”
 
 Start with policy decisions, session boundaries, redaction, auditability, and threat-model documentation.
 
-The first backend sequence is the [local service and fake fixtures](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/20), followed by a [tested deny-before-retrieval slice](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues/21).
+The first backend sequence is the [local service and fake fixtures](https://github.com/DineshDhanoki/nexusvault-rag/issues/20), followed by a [tested deny-before-retrieval slice](https://github.com/DineshDhanoki/nexusvault-rag/issues/21).
 
 ### “I build data systems.”
 
@@ -140,13 +140,13 @@ Start with retrieval interfaces, deterministic providers, citation contracts, an
 
 ### “I am new to open source.”
 
-Start with the [five-minute contributor path](docs/contributor-path.md), choose a [`good first issue`](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22), and ask a question in the issue before you code.
+Start with the [five-minute contributor path](docs/contributor-path.md), choose a [`good first issue`](https://github.com/DineshDhanoki/nexusvault-rag/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22), and ask a question in the issue before you code.
 
 ## Run it locally
 
 ```bash
-git clone https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC.git
-cd Enterprise-RAG-with-RBAC
+git clone https://github.com/DineshDhanoki/nexusvault-rag.git
+cd nexusvault-rag
 python3 -m http.server 8000
 ```
 
@@ -198,7 +198,7 @@ The viewer binds to `127.0.0.1:8010` and filters by actor, outcome, collection, 
 
 ## Changelog and status
 
-See [CHANGELOG.md](CHANGELOG.md) for releases and [GitHub Actions](https://github.com/DineshDhanoki/Enterprise-RAG-with-RBAC/actions) for deployment and quality checks.
+See [CHANGELOG.md](CHANGELOG.md) for releases and [GitHub Actions](https://github.com/DineshDhanoki/nexusvault-rag/actions) for deployment and quality checks.
 
 ## License
 
